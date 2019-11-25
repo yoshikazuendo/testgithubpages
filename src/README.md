@@ -12,4 +12,4 @@ https://yoshikazuendo.github.io/testgithubpages/
 
 すごい内容
 
-![test](./images/image.png)
+![test](./images/image2.jpg)
