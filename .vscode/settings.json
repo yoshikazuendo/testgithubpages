@@ -1,0 +1,4 @@
+{
+  "pasteImage.defaultName": "YMMDDHHmmss",
+  "pasteImage.path": "${projectRoot}\\src\\images\\${currentFileNameWithoutExt}\\"
+}
