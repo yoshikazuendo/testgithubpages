@@ -1,4 +1,4 @@
 {
   "pasteImage.defaultName": "YMMDDHHmmss",
-  "pasteImage.path": "${projectRoot}\\src\\images\\${currentFileNameWithoutExt}\\"
+  "pasteImage.path": "${projectRoot}\\src\\.vuepress\\public\\images\\${currentFileNameWithoutExt}\\"
 }
