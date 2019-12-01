@@ -65,11 +65,41 @@ VuePressは、Vue.jsの作者Evan You氏が作成した静的サイトジェネ�
 Visual Studio Codeのインストールが完了したら、Markdownを便利に編集するために、以下のExtensionをインストールします。
 
 - Markdown All in One
+  - Markdownファイルを開いた状態で`Ctrl + KV`するとプレビューが表示される。
 - markdownlint
 - Paste Image
+  - クリップボードに画像をコピーした状態でVSCode上で`Ctrl + Act + V`するとMarkdown上に画像をペーストできる。
+- Excel to Markdown table
+  - Excel上のセルをコピーした状態でVSCode上で`Shift + Alt + V`するとMarkdownの表形式でペーストできる。
 - ※Markdownとは直接関係ないが、以下のExtensionもついでにインストールしておく
   - Japanese Language Pack for Visual Studio Code
   - vscode-icons
+
+### 1.2. Paste Imageの設定
+
+クリップボードにコピーしている画像をMarkdownへ貼り付けしてくれる便利なExtensionですが、既定の設定のままだと画像の保存先がいまいちなので少し設定を変えます。
+
+#### Default Name
+
+既定のファイル名を定義できます。今回はハイフンを除いただけ。
+
+![Default Name](../src/.vuepress/public/images/README/20191201221917.png)
+
+#### Path
+
+画像の保存先を定義できます。今回は`src\public\images`ディレクトリに格納したいので変更しました。さらにMarkdownのファイル名のフォルダを切った上で格納するようにしています。
+
+![Path](../src/.vuepress/public/images/README/20191201221944.png)
+
+#### Prefix
+
+Markdown上の画像のリンクパスのプレフィックスを定義できます。前述の`Path`の設定でリンクのパスが下記の通り生成されるようになります。
+
+`![](.vuepress/public/images/hogehoge/20190101123456.png)`
+
+しかし、VuePressの開発環境上で表示しようとするとリンク不正となりブラウザ上で表示エラーとなってしまいます。
+
+![Prefix](../src/.vuepress/public/images/README/20191201222002.png)
 
 ## 2. Node.js をインストールする
 
@@ -108,11 +138,61 @@ $ npm list vuepress
 
 Markdownを書き始める前に、VuePressの設定周りをいじっておきます。
 
-### 4.1. ディレクトリ構成
+### 4.1. ディレクトリを構成する
 
+VuePressのディレクトリを構成します。詳しくは公式サイトの[ディレクトリ構造](https://vuepress.vuejs.org/guide/directory-structure.html)を参照ください。
 
+今回は以下の通り構成しています。
+
+```txt
+.
+├ docs
+│ ├ assets
+│ ├ images
+│ ├ [Markdownを元に生成されたhtmlファイル、ディレクトリ]
+│ ├ 404.html
+│ └ index.html
+├ src
+│ ├ .vuepress
+│ │ ├ public
+│ │ │ └ images
+│ │ │   └ [画像を格納するディレクトリ、ファイル]
+│ │ └ config.js
+│ ├ [Markdownを格納するディレクトリ、ファイル]
+│ └ README.md
+└ package.json
+```
+
+#### docsディレクトリ配下
+
+docsディレクトリ配下は、VuePressのビルド時に自動的に生成されます。なので事前準備としてはdocsディレクトリを作成しておくだけでOKです。
+
+また、docsディレクトリはGitHub Pagesの公開ディレクトリとして設定しますが、詳しくは後ほど。
+
+#### srcディレクトリ
+
+Markdownや挿入したい画像などを格納するディレクトリです。今回はVuePressのビルド対象としているルートディレクトリとなります。docsディレクトリとは違い、srcディレクトリ配下のファイル群は全て自分で作成していきます。
+
+Markdownはsrcディレクトリ配下に格納しますが、格納する相対パスとページルーティングパスが深く関連しているので、Markdownの配置先は意識する必要があります。
+| 相対パス               | ページルーティングパス     |
+|--------------------|-----------------|
+| src/README.md      | /               |
+| src/wiki/README.md | /wiki/          |
+| src/wiki/test.md   | /wiki/test.html |
+
+#### src\.vuepressディレクトリ
+
+`config.js`（VuePressの構成ファイル）や、画像などの静的ファイルを配置する`publicディレクトリ`を格納します。
+
+publicディレクトリ配下は、VuePressをビルドするとdocsディレクトリ配下にコピーされます。
+
+#### package.jsonファイル
+
+VuePressインストール時の過程で一緒に作成されます。
 
 ### 4.2. package.json にVuePress用コマンドを追記する
+
+package.json に以下の通りVuePress用コマンドを追記します。
 
 ```json
 ～中略～
