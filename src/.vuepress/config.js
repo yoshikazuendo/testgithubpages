@@ -1,6 +1,5 @@
 module.exports = {
-  title: 'VuePressのテストページのタイトルです。',
-  description: 'VuePressのテストページです。',
+  title: 'Aikazuyendo\'s Memo',
   dest: 'docs/',
-  base: '/mywiki/',
+  base: '/mywiki/'
 }
