@@ -263,11 +263,33 @@ $ npm run build
 
 ![ビルド結果](../src/.vuepress/public/images/README/20191201021009.png)
 
-## 4.6. GitHub Pagesへ公開する
+### 4.6. GitHub Pagesへ公開する
 
-## 4.7. GitHub Pagesにアップロード
+### 4.7. GitHub Pagesにアップロード
 
-## 4.8. デプロイを自動化する
+### 4.8. デプロイを自動化する
+
+## 5. [2020/05/03追記] GitHub のSecurity Alertsを対応してみた
+
+GitHubからSecurity Alertsのメール通知が飛んできていました。Security Alertsは、GitHub側にてリポジトリに悪影響を及ぼす脆弱性を検出してくれて、ユーザーに通知してくれる仕組みのようです。（詳しくは[公式ページ](https://help.github.com/ja/github/managing-security-vulnerabilities/about-security-alerts-for-vulnerable-dependencies)へ）
+
+GitHubでかなり放置していましたが、時間ができたので対応してみようかと思います。
+![Git HubのSecurity Alerts](../src/.vuepress/public/images/README/20200503110718.png)
+
+例えば以下のアラート。serialize-javascriptのバージョンが古くてアラートがあがっているようです。
+
+![serialize-javascriptのアラート](../src/.vuepress/public/images/README/20200503143626.png)
+
+`package-lock.json`の`serialize-javascript`のバージョンが古いものが指定されているのが原因のようです。
+mywikiで使っているVuePressのバージョンが古いのがそもそもの原因だと思うので、
+```bash
+$ npm update
+```
+でアップデートをし[push](https://github.com/yoshikazuendo/mywiki/commit/d6a699692522a18d9508cc2219a081f03dcdd835)します。
+
+pushすると、Security Alertsが解消されるようです。Security Alertsのページにアクセスし、以下の通り綺麗に警告が消えていることが確認できました。
+![Security Alertsが全て解消](../src/.vuepress/public/images/README/20200504003236.png)
+どうやら、他のSecurity Alertsも`npm update`で解決したようです。
 
 ## 参考サイト
 
