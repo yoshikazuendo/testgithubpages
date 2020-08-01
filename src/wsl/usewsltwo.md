@@ -4,30 +4,32 @@ title: Aikazuyendo's Memo
 
 # WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた
 
-以前AzureのVM上に[自前のCrowi](http://fuzzynavel.centralus.cloudapp.azure.com:3000/)を立てる検証はやってみたがWSL 上でも同様の検証をしてみたいと考えていた。WSL 2 も出たことだし、docker-composeを使ってGrowiを立ててみる検証をしてみる。
+以前AzureのVM上に[自前のCrowi](http://fuzzynavel.centralus.cloudapp.azure.com:3000/)を立てる検証はやってみましたが、WSL 上でも同様の検証をしてみたいと考えていました。
 
-※無事たてられても自前のCrowiの移行は今のところ考えていない
+また、WSL 2 も使ってみたかったので、docker-composeを使ってGrowiを立ててみる検証をしてみることにしました。その時のメモを残しておきます。
+
+※無事立てられたとしても、自前のCrowiの移行は今の所考えてはないです…
 
 ## 全体イメージ
 
-WSL 1 が入っているWindows 10 PC に WSL 2 を導入し、かつ
+WSL 1 が入っているWindows 10 PC に WSL 2 を導入し、Docker DesktopからWSL2 2 に対してGrowi をdocer-compose するイメージです。
 
-※WSL 2 のUbuntu上にDockerを直接インストールするわけではない。
-
-iPhoneでプレイしているゲームを動画として録画し、その動画からBGMのみを抜き出したファイルをiPhoneに戻すイメージです。
+※WSL 2 のUbuntu上にDockerを直接インストールするわけではありません。
 
 1. Windowsバージョンを確認する
 2. Windowsバージョンをアップデートする
 3. WSL 2 に更新する
-4. WSLのバージョンを確認する
+4. WSL のバージョンを確認する
 5. WSL 2 を既定のバージョンとして設定する
+6. Docker Desktop をインストールする
+7. docker-composeでGrowiをインストール・立ち上げる
 
 ## 使用する端末・ツール
 
 - Windows 10 搭載のPC
   - ※WSL 1 はインストール済みの状態
-- 
-- 
+- WSL 2 
+- Windows Docker Desktop
 
 ## WSL 2 とは
 
@@ -115,7 +117,7 @@ PCを再起動する。
 
 インストールが終わったら、再度検証する。
 
-## 4. WSLのバージョンを確認する
+## 4. WSL のバージョンを確認する
 
 Power Shell を管理者権限で起動し、以下のコマンドを実行する。
 
