@@ -2,7 +2,7 @@
 title: Aikazuyendo's Memo
 ---
 
-# WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた
+# WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）[WSL 2][docker-compose][Growi][Jenkins]
 
 以前AzureのVM上に[自前のCrowi](http://fuzzynavel.centralus.cloudapp.azure.com:3000/)を立てる検証はやってみましたが、WSL 上でも同様の検証をしてみたいと考えていました。
 
@@ -236,12 +236,57 @@ Docker DesktopのDashboardでも、growiのコンテナが表示され、RUNNING
   - [WSLとDocker for WindowsでGROWIを動かすとvolumesでつまずく](https://blog.mahoroi.com/posts/2019/04/growi-wsl-docker-for-windows/)
 - [《滅びの呪文》Docker Composeで作ったコンテナ、イメージ、ボリューム、ネットワークを一括完全消去する便利コマンド](https://qiita.com/suin/items/19d65e191b96a0079417)
   - `docker-compose down --rmi all --volumes`
+- WSL関連
+  - [WSL新版でLinuxをさらに使いやすく、Windows 10 May 2020 Update](https://xtech.nikkei.com/atcl/nxt/column/18/01290/052000005/)
+    - WSL 2では以下の通りらしいのでdocker-composeもすんなり使えそう。
+    - > すべてのシステムコールとの互換性が確保された。このため、LinuxディストリビューションがサポートしているDocker（OS上で区切られたアプリケーション動作環境である「コンテナ」を実現するソフトウエア）を通常通り起動できる。WSL 1には互換性がないシステムコールもあり、特定バージョンのDockerのみ起動可能だった。
+  - [Windows Subsystem for Linux 2のメモリ管理を詳しく見る](https://ascii.jp/elem/000/001/981/1981180/)
 
-### WSL 2 の補足
+## おまけ：JenkinsもWSL 2上に立ててみた
 
-[WSL新版でLinuxをさらに使いやすく、Windows 10 May 2020 Update](https://xtech.nikkei.com/atcl/nxt/column/18/01290/052000005/)
+よく利用しているJenkinsもWSL 2 上に立ててみます。これはまた骨が折れるかな…と覚悟していましたが、前述した作業でWSL 2が入っておりかつDockerが使える状態であればさくっとできました。
 
-WSL 2では、
-> すべてのシステムコールとの互換性が確保された。このため、LinuxディストリビューションがサポートしているDocker（OS上で区切られたアプリケーション動作環境である「コンテナ」を実現するソフトウエア）を通常通り起動できる。WSL 1には互換性がないシステムコールもあり、特定バージョンのDockerのみ起動可能だった。
+※こちら（
+[Install Jenkins using Docker Compose](https://dev.to/andresfmoya/install-jenkins-using-docker-compose-4cab)）のサイトを参考にさせてもらいました。
 
-ということらしいので、docker-composeもすんなり使えそう。
+docker-compose用のyamlファイルを作成する。
+
+```yaml
+version: '3.7'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - 8081:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - ~/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+```
+
+作ったyamlファイルは、適当ななディレクトリ（`/home/(UserName)/jenkins-config`とか）に格納しておきましょう。
+
+また、Jenkinsのデータを格納するためのディレクトリも切っておきます（`/home/(UserName)/jenkins`）。
+
+これで準備が整うので、`docker-compose`しちゃいましょう。
+
+```bash
+$ cd jenkins-config
+$ docker-compose up -d
+```
+
+これでJenkinsが立ち上がるので、`localhost/8081`にアクセスして確認してみます。
+
+初めてのログインページが表示されると思うので、以下で管理者パスワードを取得して、ログインを行います。
+
+```bash
+$ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
+あとは、Jenkinsのページに沿って初期設定を済ませると、晴れてトップページが表示されます！WSL 2もdocker-composeも便利だね！
+
+![](../src/../.vuepress/public/images/usewsltwo/20200809013810.png)
