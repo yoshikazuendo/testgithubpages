@@ -1,5 +1,5 @@
 const fs = require('fs');
-// const path = require('path');
+const path = require('path');
 
 var dirpath = "./docs"
 var dirs = fs.readdirSync(dirpath).filter((f) => {
