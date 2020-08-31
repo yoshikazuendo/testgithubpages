@@ -1,23 +1,29 @@
 const fs = require('fs');
-const path = require('path');
+const rootpath = "./src"; // 操作対象のルートディレクトリパス
 
-var dirpath = "./docs"
-var dirs = fs.readdirSync(dirpath).filter((f) => {
-  return fs.existsSync(dirpath + "/" + f) && fs.statSync(dirpath + "/" + f).isDirectory() && f != "assets" && f != "images"
+// ルートディレクトリ直下のディレクトリ名を取得する。
+var childDirctories = fs.readdirSync(rootpath).filter((f) => {
+  // .vuepressディレクトリは除く。
+  return fs.existsSync(rootpath + "/" + f) && fs.statSync(rootpath + "/" + f).isDirectory() && f != ".vuepress";
 })
-var sidebarArray = ["/"].concat(dirs.map((dir) => {
+console.log(childDirctories);
+
+// 各ディレクトリ配下のファイル名を元にsidebarのgroup要素とchildren要素を生成する。
+// ※加えて、トップページ用の''も生成しておく。
+var sidebarElement = [''].concat(childDirctories.map((dir) => {
   return {
     title: dir,
-    collapsable: true,
-    children: fs.readdirSync(dirpath + "/" + dir).map((childDir) => {
-      return dirpath + "/" + dir + "/" + childDir
+    collapsable: false,
+    children: fs.readdirSync(rootpath + "/" + dir).map((filename) => {
+      return childPath = dir + "/" + filename
     })
-  }
-}))
+  };
+}));
+console.log(sidebarElement);
 
 module.exports = {
   title: 'aikazuyendo\'s memo',
-  description: '個人的に気になったことを調査したりやってみた結果をメモしています。',
+  description: '個人的に気になったことを調査したりやってみた結果をメモしています',
   dest: 'docs/',
   base: '/mywiki/',
   locales: {
@@ -25,12 +31,15 @@ module.exports = {
       lang: 'ja'
     }
   },
+  config: (md) => {
+    md.options.linkify = true
+  },
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about/' },
       { text: 'GitHub', link: 'https://github.com/yoshikazuendo/mywiki' }
     ],
-    sidebar: sidebarArray
+    sidebar: sidebarElement
   }
 }
