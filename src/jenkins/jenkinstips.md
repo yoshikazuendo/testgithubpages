@@ -1,7 +1,3 @@
----
-title: Aikazuyendo's Memo
----
-
 # Jenkins Tips[Jenkins]
 
 JenkinsのTipsをメモしていきます。
