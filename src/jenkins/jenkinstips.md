@@ -4,7 +4,7 @@ title: Aikazuyendo's Memo
 
 # Jenkins Tips[Jenkins]
 
-JenkinsのTipsをメモ。
+JenkinsのTipsをメモしていきます。
 
 ## ジョブ内でビルドパラメーターを利用する
 
@@ -71,9 +71,65 @@ error /error/
 
 ![](../src/../.vuepress/public/images/jenkinstips/20200830012450.png)
 
-## 権限（執筆中）
+## ユーザー/ジョブごとに権限を設定する[Role-based Authorization Strategy]
 
+[Role-based Authorization Strategy](https://plugins.jenkins.io/role-strategy/)というプラグインを使うと、ユーザーごとやジョブごとに権限を設定することができる。例えば、ユーザーAには全てのジョブの編集・実行権限、ユーザーBには一部のジョブの実行権限だけを付与したりすることができる。
 
+### 使い方
+
+`Role-based Authorization Strategy`プラグインをインストールし、Jenkinsを再起動する。
+
+`Jenkinsの管理` -> `グローバルセキュリティの設定` -> `権限管理` で`Role-based Strategy`を選択し、「保存」もしくは「Apply」ボタンを押す。これによって、`Jenkinsの管理`に`Manage and Assign Roles`が表示される。
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831143026.png)
+
+これをクリックすると、権限の管理メニューが表示される。
+
+`Manage Roles`で権限自体の設定を行う。
+`Assign Roles`で設定した権限をユーザーに割り当てることができる。
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831143101.png)
+
+まずは、`Manage Roles`をクリックし、権限自体の設定を行っていく。権限の単位として、`Global roles`、`Item roles`とある（`Node roles`は割愛）。それぞれ以下のような権限管理が可能となっている。
+
+ - `Global roles`は、ジョブ関係なく、Jenkins全体
+ - `Item roles`は、`Pattern`に該当するジョブ毎
+
+ここでは例として、「`kolove`ユーザーは`Test`で始まるジョブのみ実行権限がある」設定を行ってみる。
+
+`Global roles`で、全体のRead権限を持つreferenceロールを追加する。`Role to add`にロール名`reference`を入力し「Add」ボタンを押すと、ロールが一覧に追加される。あとは、付与したい権限のチェックを入れればロールが付与される。
+
+※補足：`Global roles`で、全体のRead権限を付与しないと、そもそもJenkins自体にアクセスできないため、必ず付与する必要がある。付与していない状態だと、Jenkinsにログイン自体はできるが、「全体/Readパーミッションがありません」と表示され何も操作できない状態となってしまう。
+
+`Item roles`を設定していく。`Role to add`にロール名`TestJob`、`Pattern`に`Test.*`と入力し「Add」ボタンを押すと、ロールが一覧に追加される。`Pattern`には正規表現が利用でき、この設定の場合は「Testで始まるジョブ」が対象とされる。あとは、一覧で付与したい権限のチェックを入れればロールが付与される。ここでは、ジョブの参照と実行権限を付与したいため、`ジョブ - Build、Cancel、Read`をチェックONにする。
+
+ここまで設定が終わったら、「Save」または「Apply」ボタンを押して保存を行う。ここまで設定した状態が下図の通り。
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831144652.png)
+
+次に、`Assign Roles`をクリックし、作成した権限をユーザーに割り当てていく。
+
+`Global roles`の`User/group to add`にユーザー名`kolove`を入力し「Add」ボタンを押すと、ユーザーが一覧に追加される。あとは、`reference`をチェックONにすれば、先ほど作成した`refernece`権限が`kolove`に付与されたこととなる。
+
+`Item roles`の`User/group to add`にユーザー名`kolove`を入力し「Add」ボタンを押すと、ユーザーが一覧に追加される。あとは、`TestJob`をチェックONにすれば、先ほど作成した`TestJob`権限が`kolove`に付与されたこととなる。
+
+ここまで設定が終わったら、「Save」または「Apply」ボタンを押して保存を行う。ここまで設定した状態が下図の通り。
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831150502.png)
+
+以上で、「`kolove`ユーザーは`Test`で始まるジョブのみ実行権限がある」権限設定ができた。該当ユーザーでログインし、閲覧できるジョブを確認する。
+
+※システムユーザーの場合：
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831150921.png)
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831151219.png)
+
+※`kolove`ユーザーの場合：
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831150946.png)
+
+![](../src/../.vuepress/public/images/jenkinstips/20200831151250.png)
 
 ### 参考サイト
 
