@@ -1,20 +1,24 @@
-name: Build VuePress And Push
+# ワークフローの名前
+name: Build VuePress And Push GitHub Pages
 
+# ワークフローのトリガー。masterブランチへのpush時をトリガーとする。
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
+# ジョブ定義
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # ジョブ名称。GitHubに表示される。
+  build_and_push:
+    # GitHubホストランナー(Windows Server 2019)を使う。
     runs-on: windows-latest
+    # ステップ定義
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # リポジトリをチェックアウトするアクション。
       - uses: actions/checkout@v2
+      # Node.js環境を準備するアクション。
       - uses: actions/setup-node@v1
-
+      # runはOSのシェルを実行する。
       - name: npm install
         run: npm install
 
@@ -22,12 +26,13 @@ jobs:
         run: npm run build
 
       - name: git settings
+        # runはパイプ|を使って複数行のコマンドが指定できる。
         run: |
           git --version
           git config --global user.name "yoshikazuendo"
           git config --global user.email "ring2_bell@hotmail.com"
 
-      - name: git commit
+      - name: git commit and push static files
         run: |
           git add .
           git commit -am '[GitHub Actions Commit] deploy static files.'
