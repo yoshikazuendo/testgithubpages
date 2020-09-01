@@ -6,7 +6,7 @@ var childDirctories = fs.readdirSync(rootpath).filter((f) => {
   // .vuepressディレクトリは除く。
   return fs.existsSync(rootpath + "/" + f) && fs.statSync(rootpath + "/" + f).isDirectory() && f != ".vuepress";
 })
-console.log(childDirctories);
+// console.log(childDirctories);
 
 // 各ディレクトリ配下のファイル名を元にsidebarのgroup要素とchildren要素を生成する。
 // ※加えて、トップページ用の''も生成しておく。
@@ -19,7 +19,7 @@ var sidebarElement = [''].concat(childDirctories.map((dir) => {
     })
   };
 }));
-console.log(sidebarElement);
+// console.log(sidebarElement);
 
 module.exports = {
   title: 'aikazuyendo\'s memo',
@@ -34,6 +34,9 @@ module.exports = {
   config: (md) => {
     md.options.linkify = true
   },
+  head: [
+    ['link', { rel: 'icon', type: 'images/png', href: '/images/favicon.png' }],
+  ],
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
