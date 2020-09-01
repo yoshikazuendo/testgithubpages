@@ -24,6 +24,6 @@ jobs:
 
       - name: git test
         run: |
-        git --version
-        git --version
-        git --version
+          git --version
+          git --version
+          git --version
