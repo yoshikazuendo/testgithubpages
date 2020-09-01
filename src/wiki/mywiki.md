@@ -2,7 +2,7 @@
 title: 2020年に向けて自分用ドキュメントツールを見直してみた
 ---
 
-# 2020年に向けて自分用ドキュメントツールを見直してみた[Visual Studio Code][VuePress][GitHub Pages][CircleCI]
+# 2020年に向けて自分用ドキュメントツールを見直してみた[Visual Studio Code][VuePress][GitHub Pages][GitHub Actions]
 
 特に理由は無いですが2020年も近いことですし自分用ドキュメントツールを見直してみようかと思います。
 
@@ -22,7 +22,7 @@ title: 2020年に向けて自分用ドキュメントツールを見直してみ
 
 2016年～2019年（現在）：Crowi-Plus
 
-　Markdownで書けるWiki。pukiwikiとは違ったWikiサービス＆Markdownに慣れたかったので採用(pukiwikiでも頑張ればMarkdownで書けそうだけど）。自宅オンプレだと電源を入れっぱなしにする必要があるなど色々と面倒だったので、AzureにVMを立てて管理していました。現在もこれで運用中。
+　Markdownで書けるWiki。pukiwikiとは違ったWikiサービス＆Markdownに慣れたかったので採用(pukiwikiでも頑張ればMarkdownで書けそうだけど）。自宅PCだと電源を入れっぱなしにする必要があるなど色々と面倒だったので、AzureにVMを立てて管理していました。現在もこれで運用中。
 
 ![Crowi-Plus](../src/../.vuepress/public/images/mywiki/crowi.png)
 
@@ -32,15 +32,15 @@ title: 2020年に向けて自分用ドキュメントツールを見直してみ
   - リアルタイムでプレビューしたい
   - 画像を貼りたい
 - クラウドにのせる
-- クラウドサービスを使うのにお金をかけたくない
-  - Azureは無償の範囲内で使えて入るが、その恩恵が受けられなくなる可能性もあるので事前に対策しておきたい気持ちもあった。
-  - GCPの無料枠も悪くはないと思ったが今回はパス
-- GitHub Pagesに公開したい
-  - ドキュメントは最終的にはGitHub Pagesに公開したい（GitHubのCommit色をつけたい欲求も満たされる）
+  - クラウドサービスを使うのにお金をかけたくない
+    - Azureは無償の範囲内で使えて入るが、その恩恵が受けられなくなる可能性もあるので事前に対策しておきたい気持ちもあった。
+    - GCPの無料枠も悪くはないと思ったが今回はパス
+  - GitHub Pagesに公開したい
+    - ドキュメントは最終的にはGitHub Pagesに公開したい（GitHubのCommit色をつけたい欲求も満たされる）
 - ツールは今っぽいサービスを使いたい
   - GitBook v1（オンプレ向け）はメンテされていないなのでNG
   - GitBook v2 はホスティングのみなのでNG
-  - docsifyも魅力的ではあるが、メンテされていない可能性あり？
+  - docsifyも魅力的ではあるが、メンテされていない？
   - MkDocs python基盤のMarkdownで書けるドキュメントツール。これも候補だった
   - VuePress
     - 去年あたりから流行っていそう？面白そうなので使ってみたい
@@ -53,7 +53,7 @@ VuePressは、Vue.jsの作者Evan You氏が作成した静的サイトジェネ�
 
 ## 環境を準備する
 
-ということで、VuePressを使ったドキュメント管理をするための環境を作ります。
+VuePressを使ったドキュメント管理をするための環境を作ります。
 
 利用OSやソフトウェアは以下を使用しています。
 
@@ -169,13 +169,13 @@ VuePressのディレクトリを構成します。詳しくは公式サイトの
 └ package.json
 ```
 
-#### docsディレクトリ配下
+#### 4.1.1. docsディレクトリ配下
 
 docsディレクトリ配下は、VuePressのビルド時に自動的に生成されます。なので事前準備としてはdocsディレクトリを作成しておくだけでOKです。
 
 また、docsディレクトリはGitHub Pagesの公開ディレクトリとして設定しますが、詳しくは後ほど。
 
-#### srcディレクトリ
+#### 4.1.2. srcディレクトリ
 
 Markdownや挿入したい画像などを格納するディレクトリです。今回はVuePressのビルド対象としているルートディレクトリとなります。docsディレクトリとは違い、srcディレクトリ配下のファイル群は全て自分で作成していきます。
 
@@ -186,13 +186,13 @@ Markdownはsrcディレクトリ配下に格納しますが、格納する相対
 | src/wiki/README.md | /wiki/          |
 | src/wiki/test.md   | /wiki/test.html |
 
-#### src\.vuepressディレクトリ
+#### 4.1.3. src\.vuepressディレクトリ
 
 `config.js`（VuePressの構成ファイル）や、画像などの静的ファイルを配置する`publicディレクトリ`を格納します。
 
 publicディレクトリ配下は、VuePressをビルドするとdocsディレクトリ配下にコピーされます。
 
-#### package.jsonファイル
+#### 4.1.4. package.jsonファイル
 
 VuePressインストール時の過程で一緒に作成されます。
 
@@ -325,13 +325,110 @@ $ npm run build
 
 ![ビルド結果](../src/../.vuepress/public/images/mywiki/20191201021009.png)
 
-### 4.6. GitHub Pagesへ公開する
+## 5. GitHub Pagesへ公開・アップロードする
 
-### 4.7. GitHub Pagesにアップロード
+## 6. GitHub Pagesへのアップロードを自動化する
 
-### 4.8. デプロイを自動化する
+[GitHub Actions](https://github.com/features/actions)を使って、GitHub Pagesへのアップロードの自動化をしてみます。
+Markdownなどのファイルを編集し、masterブランチへのpushをトリガーにして…
 
-## 5. [2020/05/03追記] GitHub のSecurity Alertsを対応してみた
+ - VuePressのビルドを行い、Static Fileを生成する
+ - 生成されたStatic Fileを、masterブランチへpushする
+
+が行われるようにします。これらをGitHub Actionsに任せることで、普段は編集した内容をpushするだけとなるため対象ラクになるかな…と思っています。
+GitHub Actionsは、Public Repositoryだと無料で利用できる（2020/09/01時点）のでケチっている私としてはとても嬉しいです。
+
+![パブリックリポジトリだと無料](../src/../.vuepress/public/images/mywiki/20200902002247.png)
+
+GitHub Actionでの自動化の定義は、**ワークフロー**と呼ばれるYAML形式のファイルに記述していきます。ワークフローファイルは、`.github/workflows`ディレクトリ配下に`.yml`または`.yaml`ファイルで配置します。詳細は、GitHub Docsの[ワークフローを設定する](https://docs.github.com/ja/actions/configuring-and-managing-workflows/configuring-a-workflow)がわかりやすいかなと思います。
+
+### 6.1. ワークフローファイルを作成する
+
+GitHub Docsの[最初のワークフローテンプレートの追加](https://docs.github.com/ja/actions/getting-started-with-github-actions/starting-with-preconfigured-workflow-templates#adding-your-first-workflow-template)の通りに進めます。
+
+GitHubの該当リポジトリにアクセスし、Actionをクリックします。
+
+![GitHubのActionsをクリック](../src/../.vuepress/public/images/mywiki/20200902003555.png)
+
+テンプレートがいくつか表示されるので、`Node.js`のテンプレートで`Set up this workflow`をクリックします。
+
+![Node.jsを選択する](../src/../.vuepress/public/images/mywiki/20200902003701.png)
+
+すると、テンプレートの編集画面が表示されます。このエディタでも編集できますが、一旦Commitし、VSCodeでCloneしてしまえば慣れたエディタ上で編集することももちろん可能です。
+
+![初期のワークフロー](../src/../.vuepress/public/images/mywiki/20200902004206.png)
+
+### 6.2. ワークフローファイルを編集する
+
+今回やりたい自動化に合わせて、ワークフローファイルを編集していきます。以下の感じ。
+
+```yaml
+# ワークフローの名前
+name: Build VuePress And Push GitHub Pages
+
+# ワークフローのトリガー。masterブランチへのpush時をトリガーとする。
+on:
+  push:
+    branches: [ master ]
+
+# ジョブ定義
+jobs:
+  # ジョブ名称。GitHubに表示される。
+  build_and_push:
+    # GitHubホストランナー(Windows Server 2019)を使う。
+    runs-on: windows-latest
+    # ステップ定義
+    steps:
+      # リポジトリをチェックアウトするアクション。
+      - uses: actions/checkout@v2
+      # Node.js環境を準備するアクション。
+      - uses: actions/setup-node@v1
+      # runはOSのシェルを実行する。
+      - name: npm install
+        run: npm install
+
+      - name: npm run build
+        run: npm run build
+
+      - name: git settings
+        # runはパイプ|を使って複数行のコマンドが指定できる。
+        run: |
+          git --version
+          git config --global user.name "yoshikazuendo"
+          git config --global user.email "ring2_bell@hotmail.com"
+
+      - name: git commit and push static files
+        run: |
+          git add .
+          git commit -am '[GitHub Actions Commit] deploy static files.'
+          git push origin master
+
+```
+
+編集が終わったら、Commit & Pushしましょう。
+
+### 6.3. ワークフローを動かしてみる（ついでにVSCodeでプルリク）
+
+作成したワークフローが意図通り動くかどうか確かめるために、適当なファイルをPush（プルリク）してみます。
+
+VSCodeのコマンドパレットで`Create Branch`を選択し、ブランチ名を入力します。
+
+![Create Branch](../src/../.vuepress/public/images/mywiki/20200902012916.png)
+
+![Branch Name](../src/../.vuepress/public/images/mywiki/20200902013015.png)
+
+ソース管理タブを選択し、コミットメッセージを入力してコミットします。
+
+![Commit Message](../src/../.vuepress/public/images/mywiki/20200902013144.png)
+
+コミットまで終わったら、コマンドパレットで`Create Pull Request`を選択します。
+
+![](../src/../.vuepress/public/images/mywiki/20200902013332.png)
+
+## まとめ
+
+
+## [2020/05/03追記] GitHub のSecurity Alertsを対応してみた
 
 GitHubからSecurity Alertsのメール通知が飛んできていました。Security Alertsは、GitHub側にてリポジトリに悪影響を及ぼす脆弱性を検出してくれて、ユーザーに通知してくれる仕組みのようです。（詳しくは[公式ページ](https://help.github.com/ja/github/managing-security-vulnerabilities/about-security-alerts-for-vulnerable-dependencies)へ）
 
@@ -344,9 +441,11 @@ GitHubでかなり放置していましたが、時間ができたので対応�
 
 `package-lock.json`の`serialize-javascript`のバージョンが古いものが指定されているのが原因のようです。
 mywikiで使っているVuePressのバージョンが古いのがそもそもの原因だと思うので、
+
 ```bash
 $ npm update
 ```
+
 でアップデートをし[push](https://github.com/yoshikazuendo/mywiki/commit/d6a699692522a18d9508cc2219a081f03dcdd835)します。
 
 pushすると、Security Alertsが解消されるようです。Security Alertsのページにアクセスし、以下の通り綺麗に警告が消えていることが確認できました。
@@ -365,5 +464,6 @@ pushすると、Security Alertsが解消されるようです。Security Alerts�
 - [【CircleCI】CircleCI 2.0からはじめる個人での簡単なCI導入方法 - githubとの連携まで](https://tweeeety.hateblo.jp/entry/2018/02/09/195345)
 - [VuePressの基礎基礎メモ](https://nogson2.hatenablog.com/entry/2019/07/04/191648)
 - [VuePress Config Reference](https://vuepress.vuejs.org/config/#basic-config)
+- [GitHub Actions Docs](https://docs.github.com/ja/actions)
 
 [fuzzynavel](http://fuzzynavel.centralus.cloudapp.azure.com:3000/)
