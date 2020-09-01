@@ -22,5 +22,5 @@ jobs:
       - name: npm run build
         run: npm run build
 
-        - name: git test
+      - name: git test
         run: git --version
