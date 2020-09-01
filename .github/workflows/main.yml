@@ -10,7 +10,6 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     runs-on: windows-latest
-
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -22,13 +21,14 @@ jobs:
       - name: npm run build
         run: npm run build
 
-      - name: git test
+      - name: git settings
         run: |
           git --version
           git config --global user.name "yoshikazuendo"
           git config --global user.email "ring2_bell@hotmail.com"
-          git status
-          cd docs
-          dir
+
+      - name: git commit
+        run: |
           git add .
-          git commit -m '[GitHub Actions Commit] deploy static files.'
+          git commit -am '[GitHub Actions Commit] deploy static files.'
+          git push origin master
