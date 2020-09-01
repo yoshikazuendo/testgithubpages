@@ -1,3 +1,7 @@
+---
+title: WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）[WSL 2][docker-compose][Growi][Jenkins]
+---
+
 # WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）[WSL 2][docker-compose][Growi][Jenkins]
 
 以前AzureのVM上に[自前のCrowi](http://fuzzynavel.centralus.cloudapp.azure.com:3000/)を立てる検証はやってみましたが、WSL 上でも同様の検証をしてみたいと考えていました。
