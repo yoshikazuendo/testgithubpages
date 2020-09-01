@@ -425,6 +425,8 @@ VSCodeのコマンドパレットで`Create Branch`を選択し、ブランチ�
 
 ![](../src/../.vuepress/public/images/mywiki/20200902013332.png)
 
+![](../src/../.vuepress/public/images/mywiki/20200902013441.png)
+
 ## まとめ
 
 
