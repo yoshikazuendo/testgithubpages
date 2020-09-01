@@ -26,13 +26,12 @@ module.exports = {
   description: '個人的に気になったことを調査したりやってみた結果をメモしています',
   dest: 'docs/',
   base: '/mywiki/',
-  locales: {
-    '/': {
-      lang: 'ja'
+  markdown: {
+    lineNumbers: true, // コードブロックに行番号を表示
+    linkify: true, // URL記述を自動的にリンクさせる
+    toc: {
+      includeLevel: [2, 3, 4, 5, 6] // [[toc]]の対象とする見出しレベル
     }
-  },
-  config: (md) => {
-    md.options.linkify = true
   },
   head: [
     ['link', { rel: 'icon', type: 'images/png', href: '/images/favicon.png' }],

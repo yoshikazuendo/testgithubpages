@@ -1,5 +1,5 @@
 ---
-title: WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）[WSL 2][docker-compose][Growi][Jenkins]
+title: WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）
 ---
 
 # WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき）[WSL 2][docker-compose][Growi][Jenkins]
@@ -9,6 +9,8 @@ title: WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowi
 また、WSL 2 も使ってみたかったので、docker-composeを使ってGrowiを立ててみる検証をしてみることにしました。その時のメモを残しておきます。
 
 ※無事立てられたとしても、自前のCrowiの移行は今の所考えてはないです…
+
+[[toc]]
 
 ## 全体イメージ
 
