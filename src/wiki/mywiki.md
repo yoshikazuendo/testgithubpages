@@ -423,12 +423,36 @@ VSCodeのコマンドパレットで`Create Branch`を選択し、ブランチ�
 
 コミットまで終わったら、コマンドパレットで`Create Pull Request`を選択します。
 
+:::warning
+`Create Pull Request`を利用するためには、Extensionをインストールする必要があります。
+:::
+
 ![](../src/../.vuepress/public/images/mywiki/20200902013332.png)
+
+プルリク先のリモートブランチ名を入力します。
 
 ![](../src/../.vuepress/public/images/mywiki/20200902013441.png)
 
-## まとめ
+プルリク元のローカルブランチ名を入力します。
 
+![](../src/../.vuepress/public/images/mywiki/20200902013544.png)
+
+プルリクのタイトルを何を元にするか選択します。ここではひとまず`commit`を選択し、最後のCommitのメッセージを採用します。
+
+![](../src/../.vuepress/public/images/mywiki/20200902013558.png)
+
+すると、これだけで**プルリクが作成されちゃいます。お手軽。** 作成されたプルリクは、以下のようにVSCode上の新しいタブとして表示されます。TitleやDescriptionの変更ができたり、プルリクマージまでできちゃうので、簡単な操作だけであればGitHubのページに遷移する必要すらなさそうな感じです。
+
+![](../src/../.vuepress/public/images/mywiki/20200902014222.png)
+
+さて、話を戻して…これで`Merge Pull Request`をすると、作成したワークフローのトリガーとなるため、動きを確かめることができます。
+
+`Merge Pull Request`をすると、
+
+
+## まとめ（執筆中）
+
+ここにまとめを書く。
 
 ## [2020/05/03追記] GitHub のSecurity Alertsを対応してみた
 
