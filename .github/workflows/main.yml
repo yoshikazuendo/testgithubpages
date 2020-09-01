@@ -14,16 +14,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      # - uses: actions/setup-node@v1
 
-      - name: npm install
-        run: npm install
+      # - name: npm install
+      #   run: npm install
 
-      - name: npm run build
-        run: npm run build
+      # - name: npm run build
+      #   run: npm run build
 
       - name: git test
         run: |
           git --version
-          git --version
-          git --version
+          git config --global user.name "yoshikazuendo"
+          git config --global user.email "ring2_bell@hotmail.com"
+          git branch --contains
