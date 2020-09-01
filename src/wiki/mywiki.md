@@ -22,7 +22,7 @@ title: 2020年に向けて自分用ドキュメントツールを見直してみ
 
 　Markdownで書けるWiki。pukiwikiとは違ったWikiサービス＆Markdownに慣れたかったので採用(pukiwikiでも頑張ればMarkdownで書けそうだけど）。自宅オンプレだと電源を入れっぱなしにする必要があるなど色々と面倒だったので、AzureにVMを立てて管理していました。現在もこれで運用中。
 
-![Crowi-Plus](../src/.vuepress/public/images/README/crowi.png)
+![Crowi-Plus](../src/../.vuepress/public/images/mywiki/crowi.png)
 
 ## どんなドキュメントツールを使いたいか
 
@@ -87,13 +87,13 @@ Visual Studio Codeのインストールが完了したら、Markdownを便利に
 
 既定のファイル名を定義できます。今回はハイフンを除いただけ。
 
-![Default Name](../src/.vuepress/public/images/README/20191201221917.png)
+![Default Name](../src/../.vuepress/public/images/mywiki/20191201221917.png)
 
 #### Path
 
 画像の保存先を定義できます。今回は`src\public\images`ディレクトリに格納したいので変更しました。さらにMarkdownのファイル名のフォルダを切った上で格納するようにしています。
 
-![Path](../src/.vuepress/public/images/README/20191201221944.png)
+![Path](../src/../.vuepress/public/images/mywiki/20191201221944.png)
 
 #### Prefix
 
@@ -103,7 +103,7 @@ Markdown上の画像のリンクパスのプレフィックスを定義できま
 
 しかし、VuePressの開発環境上で表示しようとするとリンク不正となりブラウザ上で表示エラーとなってしまいます。
 
-![Prefix](../src/.vuepress/public/images/README/20191201222002.png)
+![Prefix](../src/../.vuepress/public/images/mywiki/20191201222002.png)
 
 ## 2. Node.js をインストールする
 
@@ -227,7 +227,7 @@ module.exports = {
 
 サイトのタイトルを定義できます。すべてのページタイトルとして反映されるようです。VuePressのデフォルトテーマの場合、ナビゲーションバーに表示されます。
 
-![title Config](../src/.vuepress/public/images/README/20191201164628.png)
+![title Config](../src/../.vuepress/public/images/mywiki/20191201164628.png)
 
 #### 4.3.2. dest Config
 
@@ -247,11 +247,11 @@ GitHub Pagesなどへデプロイする際に設定する必要があるよう�
 $ npm run dev
 ```
 
-![npm run devの実行結果](../src/.vuepress/public/images/README/20191201002624.png)
+![npm run devの実行結果](../src/../.vuepress/public/images/mywiki/20191201002624.png)
 
 表示されたURLにアクセスするとブラウザで動作確認ができます。
 
-![ブラウザで確認](../src/.vuepress/public/images/README/20191201003143.png)
+![ブラウザで確認](../src/../.vuepress/public/images/mywiki/20191201003143.png)
 
 なお、開発環境を立ち上げた状態でMarkdownを修正すると、その内容がリアルタイムでブラウザに反映されます。
 
@@ -265,7 +265,7 @@ $ npm run build
 
 今回は、docsフォルダ配下に静的ファイルが生成されます。
 
-![ビルド結果](../src/.vuepress/public/images/README/20191201021009.png)
+![ビルド結果](../src/../.vuepress/public/images/mywiki/20191201021009.png)
 
 ### 4.6. GitHub Pagesへ公開する
 
@@ -278,11 +278,11 @@ $ npm run build
 GitHubからSecurity Alertsのメール通知が飛んできていました。Security Alertsは、GitHub側にてリポジトリに悪影響を及ぼす脆弱性を検出してくれて、ユーザーに通知してくれる仕組みのようです。（詳しくは[公式ページ](https://help.github.com/ja/github/managing-security-vulnerabilities/about-security-alerts-for-vulnerable-dependencies)へ）
 
 GitHubでかなり放置していましたが、時間ができたので対応してみようかと思います。
-![Git HubのSecurity Alerts](../src/.vuepress/public/images/README/20200503110718.png)
+![Git HubのSecurity Alerts](../src/../.vuepress/public/images/mywiki/20200503110718.png)
 
 例えば以下のアラート。serialize-javascriptのバージョンが古くてアラートがあがっているようです。
 
-![serialize-javascriptのアラート](../src/.vuepress/public/images/README/20200503143626.png)
+![serialize-javascriptのアラート](../src/../.vuepress/public/images/mywiki/20200503143626.png)
 
 `package-lock.json`の`serialize-javascript`のバージョンが古いものが指定されているのが原因のようです。
 mywikiで使っているVuePressのバージョンが古いのがそもそもの原因だと思うので、
@@ -292,7 +292,7 @@ $ npm update
 でアップデートをし[push](https://github.com/yoshikazuendo/mywiki/commit/d6a699692522a18d9508cc2219a081f03dcdd835)します。
 
 pushすると、Security Alertsが解消されるようです。Security Alertsのページにアクセスし、以下の通り綺麗に警告が消えていることが確認できました。
-![Security Alertsが全て解消](../src/.vuepress/public/images/README/20200504003236.png)
+![Security Alertsが全て解消](../src/../.vuepress/public/images/mywiki/20200504003236.png)
 どうやら、他のSecurity Alertsも`npm update`で解決したようです。
 
 ## 参考サイト
