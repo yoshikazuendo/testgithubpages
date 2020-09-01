@@ -1,5 +1,5 @@
 ---
-title: 2020年に向けて自分用ドキュメントツールを見直してみた[Visual Studio Code][VuePress][GitHub Pages][CircleCI]
+title: 2020年に向けて自分用ドキュメントツールを見直してみた
 ---
 
 # 2020年に向けて自分用ドキュメントツールを見直してみた[Visual Studio Code][VuePress][GitHub Pages][CircleCI]
@@ -7,6 +7,8 @@ title: 2020年に向けて自分用ドキュメントツールを見直してみ
 特に理由は無いですが2020年も近いことですし自分用ドキュメントツールを見直してみようかと思います。
 
 本稿では、ドキュメントツールを見直した際に行った作業を記録しておきます。
+
+[[toc]]
 
 ## 前置き
 
@@ -215,11 +217,53 @@ VuePressは、サイト構成に対して色々なカスタマイズが可能な
 
 今回はいくつかの設定値を編集し、以下のような設定としています。
 
-```json
+```js
+const fs = require('fs');
+const rootpath = "./src"; // 操作対象のルートディレクトリパス
+
+// ルートディレクトリ直下のディレクトリ名を取得する。
+var childDirctories = fs.readdirSync(rootpath).filter((f) => {
+  // .vuepressディレクトリは除く。
+  return fs.existsSync(rootpath + "/" + f) && fs.statSync(rootpath + "/" + f).isDirectory() && f != ".vuepress";
+})
+// console.log(childDirctories);
+
+// 各ディレクトリ配下のファイル名を元にsidebarのgroup要素とchildren要素を生成する。
+// ※加えて、トップページ用の''も生成しておく。
+var sidebarElement = [''].concat(childDirctories.map((dir) => {
+  return {
+    title: dir,
+    collapsable: false,
+    children: fs.readdirSync(rootpath + "/" + dir).map((filename) => {
+      return childPath = dir + "/" + filename
+    })
+  };
+}));
+// console.log(sidebarElement);
+
 module.exports = {
-  title: 'Aikazuyendo\'s Memo',
+  title: 'aikazuyendo\'s memo',
+  description: '個人的に気になったことを調査したりやってみた結果をメモしています',
   dest: 'docs/',
-  base: '/mywiki/'
+  base: '/mywiki/',
+  markdown: {
+    lineNumbers: true, // コードブロックに行番号を表示
+    linkify: true, // URL記述を自動的にリンクさせる
+    toc: {
+      includeLevel: [2, 3, 4, 5, 6] // [[toc]]の対象とする見出しレベル
+    }
+  },
+  head: [
+    ['link', { rel: 'icon', type: 'images/png', href: '/images/favicon.png' }],
+  ],
+  themeConfig: {
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'About', link: '/about/' },
+      { text: 'GitHub', link: 'https://github.com/yoshikazuendo/mywiki' }
+    ],
+    sidebar: sidebarElement
+  }
 }
 ```
 
@@ -227,7 +271,7 @@ module.exports = {
 
 サイトのタイトルを定義できます。すべてのページタイトルとして反映されるようです。VuePressのデフォルトテーマの場合、ナビゲーションバーに表示されます。
 
-![title Config](../src/../.vuepress/public/images/mywiki/20191201164628.png)
+![title Config](../src/../.vuepress/public/images/mywiki/20200901140936.png)
 
 #### 4.3.2. dest Config
 
@@ -238,6 +282,20 @@ srcフォルダ内のMarkdownに対してVuePressをビルドするため、ビ�
 
 GitHub Pagesなどへデプロイする際に設定する必要があるようです。
 例えば、GitHub PagesのURLが`https://yoshikazuendo.github.io/mywiki/`の場合は、base Configに`/mywiki/`を設定する必要があります。
+
+#### 4.3.4. head Config
+
+headタグへ情報を組み込みたい場合は`head Config`に記載をしていくそうです。ここでは、faviconを設定しています。`head Config`要素はList形式なので、他にも色々設定できるようです。
+
+#### 4.3.5. themeConfig -nav-
+
+サイトのヘッダー部分にナビゲーションのリンクを設定することができます。こちらもList形式なので複数設定が可能です。
+
+#### 4.3.6. themeConfig -sidebar-
+
+サイトの左側にサイドバーを表示することが可能です。ここでは、サイトマップ的に本サイトの全ページをリンクで並べたいですが、ページの増減がある度にこの要素も編集するのは少し面倒です。なので、`src`ディレクトリ配下のmarkdownファイルを対象に`sidebar`要素を生成するJavaScriptで補うこととしました。
+
+ディレクトリを`sidebar`要素の`Group`とし、リンクのグルーピングも表現しています。
 
 ### 4.4. VuePressの開発環境を起動する
 
