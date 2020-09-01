@@ -402,7 +402,6 @@ jobs:
           git add .
           git commit -am '[GitHub Actions Commit] deploy static files.'
           git push origin master
-
 ```
 
 編集が終わったら、Commit & Pushしましょう。
@@ -447,8 +446,35 @@ VSCodeのコマンドパレットで`Create Branch`を選択し、ブランチ�
 
 さて、話を戻して…これで`Merge Pull Request`をすると、作成したワークフローのトリガーとなるため、動きを確かめることができます。
 
-`Merge Pull Request`をすると、
+VSCode上のプルリクの画面で`Merge Pull Request`をクリックします。
 
+![](../src/../.vuepress/public/images/mywiki/20200902021108.png)
+
+`This branch has no conflict ...`と表示されたら、`Create Merge Commit`をクリックします。
+
+![](../src/../.vuepress/public/images/mywiki/20200902021122.png)
+
+これで、プルリクがマージされます。GitHub Actionsのページを見てみると、以下のスクショのように`results`エリアにワークフローの実行状況が積まれました。リンクをクリックすると…
+
+![](../src/../.vuepress/public/images/mywiki/20200902021153.png)
+
+実行中のワークフローのサマリーページに遷移します。`1 in progress job`と表示され、ワークフローが実行中であることが分かります。左ツリーのジョブ名をクリックすると…
+
+![](../src/../.vuepress/public/images/mywiki/20200902021206.png)
+
+まさに実行中のジョブの状態がコンソールログのような見た目で確認することができます。
+
+![](../src/../.vuepress/public/images/mywiki/20200902021221.png)
+
+暫く待って、ワークフローが正常に完了すると、緑色のチェックマークが付きます。これで、無事作成したワークフローが正常完了することが確認できました。
+
+![](../src/../.vuepress/public/images/mywiki/20200902021512.png)
+
+念の為、`npm run build`で生成されたであろう静的ファイルが`master`ブランチにcommit & pushされているかどうかをGitHub上で確認してみると、無事コミットログが載っていることが確認できました。
+
+これで、ワークフローが意図通り動いていることが確認できました。
+
+![](../src/../.vuepress/public/images/mywiki/20200902024204.png)
 
 ## まとめ（執筆中）
 
