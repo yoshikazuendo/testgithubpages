@@ -23,4 +23,7 @@ jobs:
         run: npm run build
 
       - name: git test
-        run: git --version
+        run: |
+        git --version
+        git --version
+        git --version
