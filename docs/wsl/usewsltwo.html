@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>WSL 1 をWSL 2 にアップデートしてdocker-composeを使ってGrowiを立ててみた（おまけつき） | aikazuyendo&#39;s memo</title>
-    <meta name="generator" content="VuePress 1.8.2">
+    <meta name="generator" content="VuePress 1.9.7">
     <link rel="icon" type="images/png" href="/mywiki/images/favicon.png">
     <meta name="description" content="個人的に気になったことを調査したりやってみた結果をメモしています">
     
-    <link rel="preload" href="/mywiki/assets/css/0.styles.5a28db33.css" as="style"><link rel="preload" href="/mywiki/assets/js/app.8ca41973.js" as="script"><link rel="preload" href="/mywiki/assets/js/2.6b55b8f5.js" as="script"><link rel="preload" href="/mywiki/assets/js/4.f906191c.js" as="script"><link rel="prefetch" href="/mywiki/assets/js/10.7e914a6d.js"><link rel="prefetch" href="/mywiki/assets/js/11.5046adb3.js"><link rel="prefetch" href="/mywiki/assets/js/3.5562178d.js"><link rel="prefetch" href="/mywiki/assets/js/5.a7e2e1d7.js"><link rel="prefetch" href="/mywiki/assets/js/6.affd3ca9.js"><link rel="prefetch" href="/mywiki/assets/js/7.a51b5f0e.js"><link rel="prefetch" href="/mywiki/assets/js/8.3226720f.js"><link rel="prefetch" href="/mywiki/assets/js/9.62b58d78.js">
+    <link rel="preload" href="/mywiki/assets/css/0.styles.5a28db33.css" as="style"><link rel="preload" href="/mywiki/assets/js/app.33671b04.js" as="script"><link rel="preload" href="/mywiki/assets/js/2.6f2bb058.js" as="script"><link rel="preload" href="/mywiki/assets/js/4.02ee91f0.js" as="script"><link rel="prefetch" href="/mywiki/assets/js/10.39b8b34a.js"><link rel="prefetch" href="/mywiki/assets/js/11.3657b8e7.js"><link rel="prefetch" href="/mywiki/assets/js/3.9dc8ed7a.js"><link rel="prefetch" href="/mywiki/assets/js/5.176e9a0f.js"><link rel="prefetch" href="/mywiki/assets/js/6.13ddb6bb.js"><link rel="prefetch" href="/mywiki/assets/js/7.eae4f81e.js"><link rel="prefetch" href="/mywiki/assets/js/8.67521861.js"><link rel="prefetch" href="/mywiki/assets/js/9.a2206756.js">
     <link rel="stylesheet" href="/mywiki/assets/css/0.styles.5a28db33.css">
   </head>
   <body>
@@ -40,8 +40,8 @@ $ <span class="token function">vi</span> docker-compose.yml
 
 <span class="token comment"># 変更後</span>
 <span class="token punctuation">-</span> FILE_UPLOAD=local     <span class="token comment"># activate this line if you use local storage of server rather than AWS</span>
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>最後にコンテナを起動する。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ docker-compose up -d
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>しばらく時間が経ったあとに、<code>docker ps</code>で以下のコンテナが立ち上がっているのが確認できればOK。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ docker <span class="token function">ps</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>最後にコンテナを起動する。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">docker-compose</span> up -d
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>しばらく時間が経ったあとに、<code>docker ps</code>で以下のコンテナが立ち上がっているのが確認できればOK。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">docker</span> <span class="token function">ps</span>
 CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                      NAMES
 c53c994b44ab        growi_app             <span class="token string">&quot;/sbin/tini -e 143 -…&quot;</span>   <span class="token number">10</span> hours ago        Up <span class="token number">10</span> hours         <span class="token number">127.0</span>.0.1:3000-<span class="token operator">&gt;</span><span class="token number">3000</span>/tcp   growi_app_1
 f6ebe0fa6158        mongo:3.6             <span class="token string">&quot;docker-entrypoint.s…&quot;</span>   <span class="token number">10</span> hours ago        Up <span class="token number">10</span> hours         <span class="token number">27017</span>/tcp                  growi_mongo_1
@@ -65,13 +65,13 @@ f6ebe0fa6158        mongo:3.6             <span class="token string">&quot;docke
       <span class="token punctuation">-</span> /var/run/docker.sock<span class="token punctuation">:</span>/var/run/docker.sock
       <span class="token punctuation">-</span> /usr/local/bin/docker<span class="token punctuation">:</span>/usr/local/bin/docker
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>作ったyamlファイルは、適当ななディレクトリ（<code>/home/(UserName)/jenkins-config</code>とか）に格納しておきましょう。</p> <p>また、Jenkinsのデータを格納するためのディレクトリも切っておきます（<code>/home/(UserName)/jenkins</code>）。</p> <p>これで準備が整うので、<code>docker-compose</code>しちゃいましょう。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token builtin class-name">cd</span> jenkins-config
-$ docker-compose up -d
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>これでJenkinsが立ち上がるので、<code>localhost/8081</code>にアクセスして確認してみます。</p> <p>初めてのログインページが表示されると思うので、以下で管理者パスワードを取得して、ログインを行います。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ docker <span class="token builtin class-name">exec</span> jenkins <span class="token function">cat</span> /var/jenkins_home/secrets/initialAdminPassword
+$ <span class="token function">docker-compose</span> up -d
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>これでJenkinsが立ち上がるので、<code>localhost/8081</code>にアクセスして確認してみます。</p> <p>初めてのログインページが表示されると思うので、以下で管理者パスワードを取得して、ログインを行います。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ <span class="token function">docker</span> <span class="token builtin class-name">exec</span> jenkins <span class="token function">cat</span> /var/jenkins_home/secrets/initialAdminPassword
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>あとは、Jenkinsのページに沿って初期設定を済ませると、晴れてトップページが表示されます！WSL 2もdocker-composeも便利だね！</p> <p><img src="/mywiki/assets/img/20200809013810.e7078df4.png" alt=""></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
       <a href="/mywiki/wiki/mywiki.html" class="prev">
         2020年に向けて自分用ドキュメントツールを見直してみた
       </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/mywiki/assets/js/app.8ca41973.js" defer></script><script src="/mywiki/assets/js/2.6b55b8f5.js" defer></script><script src="/mywiki/assets/js/4.f906191c.js" defer></script>
+    <script src="/mywiki/assets/js/app.33671b04.js" defer></script><script src="/mywiki/assets/js/2.6f2bb058.js" defer></script><script src="/mywiki/assets/js/4.02ee91f0.js" defer></script>
   </body>
 </html>
